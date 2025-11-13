@@ -11,6 +11,7 @@ func playHandler(w http.ResponseWriter, r *http.Request) {
 <head>
   <meta charset="UTF-8">
   <title>Puissance 4</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
