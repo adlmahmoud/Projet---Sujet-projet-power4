@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Puissance 4</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="page-dacceuil.css">
+  
 </head>
+
 <body>
     <header>
-        <div class="nom">
+        <div class="titre">
          <h1>Puissance 4</h1>
         </div>
         <div class="regles">
@@ -16,10 +18,85 @@
             <p>Le Puissance 4 se joue à deux joueurs sur une grille de 7 colonnes et 6 lignes avec des jetons de deux couleurs différentes. À tour de rôle, chaque joueur choisit une colonne et place un jeton qui tombe jusqu’à la première case vide de cette colonne. Le but est d’être le premier à aligner 4 jetons de sa couleur horizontalement, verticalement ou en diagonale. La partie se termine lorsqu’un joueur réussit cet alignement et gagne, ou lorsque la grille est pleine sans gagnant, ce qui fait match nul. Pendant le jeu, il faut aussi essayer de bloquer l’adversaire et créer des situations où l’on peut gagner sur plusieurs lignes à la fois.</p>
             <br>
         </div>
-        <div class="img_regles">
-            <img src="/assets/gagner_en_puiss_4.jpg" alt="comment_gagner">
+           
+        <img class="img-regles" src="/assets/gagner_en_puiss_4.jpg" alt="comment_gagner">
+          <a href="/route/game/init/init.html" class="play-button">Jouer</a>
         </div>
-        <a href="/route/game/init/init.html">Commencer à jouer</a>
+        <div class="copyright">© 2025 Puissance 4 - Tous droits réservés</div>
     </header>
+    
+
+     
+
+
+
+
+
+
+
+
+
+
+<!------------------ boutton fond ---------------------- -->
+<button id="change-color">Changer le fond</button>
+
+
+<script>
+let isBlue = false;
+
+document.getElementById("change-color").addEventListener("click", () => {
+
+    if (!isBlue) {
+        document.body.style.background =
+            "radial-gradient(circle at 20% 30%, #4da3ff 0%, #0056d6 40%, #0a1a33 100%)";
+
+        document.body.style.setProperty("--overlay-grid",
+            "radial-gradient(circle, rgba(255,255,255,0.12) 25%, transparent 26%), radial-gradient(circle, rgba(255,255,255,0.06) 25%, transparent 26%)"
+        );
+
+        isBlue = true;
+
+    } else {
+        document.body.style.background =
+            "radial-gradient(circle at 20% 30%, #ffcf33 0%, #ff4b4b 40%, #1a1a1a 100%)";
+
+        document.body.style.setProperty("--overlay-grid",
+            "radial-gradient(circle, rgba(255,255,255,0.15) 25%, transparent 26%), radial-gradient(circle, rgba(255,255,255,0.08) 25%, transparent 26%)"
+        );
+
+        isBlue = false;
+    }
+});
+</script>
+
+
+
+<!--_____________________________________ fin boutton__________________________ -->
+
+
+
+
+
+
+
+
+
+
+
+<!-- --------------------copuright-------------------- -->
+  <style>
+        .copyright {
+            position: fixed;
+            right: 12px;
+            bottom: 8px;
+            font-size: 0.85rem;
+            color: #666;
+            padding: 4px 8px;
+            z-index: 9999;
+            pointer-events: none;
+        }
+    </style>
+<!-- __________________fin copyright__________________________________ -->
+
 </body>
 </html>
