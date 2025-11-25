@@ -1,0 +1,38 @@
+{{define "History"}}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Historique - Puissance 4</title>
+    <link rel="stylesheet" href="/css/game.css">
+</head>
+<body>
+    <div class="game-container">
+        <header class="game-header">
+            <h1>Historique des Parties</h1>
+            <a href="/game"><button class="btn-quit">Retour au jeu</button></a>
+        </header>
+
+        <main style="padding:30px;">
+            {{if .History}}
+                <div class="history-list">
+                    {{range $i, $h := .History}}
+                        <div class="history-item">
+                            <div class="history-number">Partie {{$i}}</div>
+                            <div class="history-details">
+                                <p><strong>{{$h.Player1}}</strong> VS <strong>{{$h.Player2}}</strong></p>
+                                <p>Résultat: <span class="result">{{if $h.Winner}}{{$h.Winner}} a gagné{{else}}Match nul{{end}}</span></p>
+                                <p>Coups: {{$h.Moves}} | {{$h.Date}}</p>
+                            </div>
+                        </div>
+                    {{end}}
+                </div>
+            {{else}}
+                <p class="no-history">Aucune partie enregistrée</p>
+            {{end}}
+        </main>
+    </div>
+</body>
+</html>
+{{end}}

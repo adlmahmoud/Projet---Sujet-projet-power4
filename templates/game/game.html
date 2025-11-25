@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puissance 4 - Jeu</title>
+    <link rel="stylesheet" href="/css/game.css">
+</head>
+<body>
+    <div class="game-container">
+        <header class="game-header">
+            <div class="header-content">
+                <h1>Puissance 4</h1>
+                <div class="players-info">
+                    <div class="player-status player-1-status {{if .Player1Active}}active{{end}}">
+                        <span class="player-name">{{.Game.Player1.Name}}</span>
+                        {{if .Player1Active}}<span class="player-turn">Votre tour</span>{{end}}
+                    </div>
+                    <div class="vs">VS</div>
+                    <div class="player-status player-2-status {{if .Player2Active}}active{{end}}">
+                        <span class="player-name">{{.Game.Player2.Name}}</span>
+                        {{if .Player2Active}}<span class="player-turn">Votre tour</span>{{end}}
+                    </div>
+                </div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:center;">
+                <form method="GET" action="/">
+                    <button class="btn-quit" type="submit">Quitter</button>
+                </form>
+            </div>
+        </header>
+
+        <main class="game-main">
+            <div class="game-content">
+                <!-- Grille du jeu -->
+                <div class="game-board">
+                    {{range $colIndex, $col := .Game.Board}}
+                    <div class="column">
+                        <form method="POST" action="/move">
+                            <input type="hidden" name="col" value="{{$colIndex}}">
+                            <button class="btn" type="submit" style="width:100%;padding:6px;border-radius:6px;margin-bottom:6px;">▼</button>
+                        </form>
+                        {{range $rowIndex, $cell := $col}}
+                            <div class="cell {{if $cell}}filled{{end}}">
+                                {{if $cell}}<div class="token {{$.Game.ColorOf $cell}}"></div>{{end}}
+                            </div>
+                        {{end}}
+                    </div>
+                    {{end}}
+                </div>
+
+                <!-- Zone d'affichage du message -->
+                <div class="game-message">
+                    {{if .Finished}}
+                        {{if .Game.Winner}}🎉 {{.Game.Winner}} a gagné !{{else}}Match nul !{{end}}
+                    {{else}}
+                        Au tour de : {{.CurrentPlayerName}}
+                    {{end}}
+                </div>
+            </div>
+
+            <!-- Panneau latéral avec les infos -->
+            <aside class="game-sidebar">
+                <div class="score-board">
+                    <h3>Infos du Jeu</h3>
+                    <div class="score-item">
+                        <span>Coups joués:</span>
+                        <span>{{.Game.MoveCount}}</span>
+                    </div>
+                    <div class="score-item">
+                        <span>Statut:</span>
+                        <span>{{.Game.Status}}</span>
+                    </div>
+                </div>
+
+                <form method="POST" action="/reset">
+                    <button class="btn-reset" type="submit">Nouvelle partie</button>
+                </form>
+
+                <form method="GET" action="/history">
+                    <button class="btn-history" type="submit">📊 Historique</button>
+                </form>
+            </aside>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 Puissance 4 Game. Tous droits réservés.</p>
+        </footer>
+    </div>
+
+</body>
+</html>
