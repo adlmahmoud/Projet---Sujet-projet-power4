@@ -173,7 +173,7 @@ body::before {
 
 .play-button {
     position: fixed;
-    bottom: -100px;  
+    bottom: -70px;  
     left: 50%;
     transform: translateX(-50%);
     background: #ffd900;

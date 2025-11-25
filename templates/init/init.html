@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Initialisation - Puissance 4</title>
+    <link rel="stylesheet" href="/css/init.css">
+</head>
+<body>
+    <div class="init-container">
+        <header class="init-header">
+            <h1 class="init-title">Puissance 4</h1>
+            <p class="init-subtitle">-----------------------------------Configuration des joueurs-----------------------------------</p>
+        </header>
+
+        <main class="init-main">
+            <form method="POST" action="/start" class="init-form">
+                <div class="players-grid">
+
+
+
+
+                    <div class="player-card player-card-1">
+                        <h2 class="player-title">Joueur 1</h2>
+                        
+                        <div class="form-group">
+                            <label for="player1Name" class="form-label">Pseudo :</label>
+                            <input 
+                                type="text" 
+                                id="player1Name" 
+                                name="player1Name" 
+                                class="form-input"
+                                placeholder="Entrez votre pseudo"
+                                maxlength="20"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <fieldset class="color-fieldset">
+                                <legend class="form-label">Couleur du jeton :</legend>
+                                <div class="color-picker">
+                                    <label class="color-option">
+                                        <input 
+                                            type="radio" 
+                                            name="player1Color" 
+                                            value="red"
+                                            checked
+                                            class="color-radio"
+                                        >
+                                        <span class="color-circle color-red"></span>
+                                        <span class="color-label">Rouge</span>
+                                    </label>
+                                    <label class="color-option">
+                                        <input 
+                                            type="radio" 
+                                            name="player1Color" 
+                                            value="yellow"
+                                            class="color-radio"
+                                        >
+                                        <span class="color-circle color-yellow"></span>
+                                        <span class="color-label">Jaune</span>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+
+                    <div class="player-card player-card-2">
+                        <h2 class="player-title">Joueur 2</h2>
+                        
+                        <div class="form-group">
+                            <label for="player2Name" class="form-label">Pseudo :</label>
+                            <input 
+                                type="text" 
+                                id="player2Name" 
+                                name="player2Name" 
+                                class="form-input"
+                                placeholder="Entrez votre pseudo"
+                                maxlength="20"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <fieldset class="color-fieldset">
+                                <legend class="form-label">Couleur du jeton :</legend>
+                                <div class="color-picker">
+                                    <label class="color-option">
+                                        <input 
+                                            type="radio" 
+                                            name="player2Color" 
+                                            value="red"
+                                            class="color-radio"
+                                        >
+                                        <span class="color-circle color-red"></span>
+                                        <span class="color-label">Rouge</span>
+                                    </label>
+                                    <label class="color-option">
+                                        <input 
+                                            type="radio" 
+                                            name="player2Color" 
+                                            value="yellow"
+                                            checked
+                                            class="color-radio"
+                                        >
+                                        <span class="color-circle color-yellow"></span>
+                                        <span class="color-label">Jaune</span>
+                                
+                           
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="reset" class="btn btn-secondary">Réinitialiser</button>
+                    <button type="submit" class="btn btn-primary">Commencer la partie</button>
+                </div>
+            </form>
+        </main>
+
+        <footer class="copyright">
+            <p>&copy; 2025 Puissance 4 Game. Tous droits réservés.</p>
+        </footer>
+    </div>
+
+
+
+
+
+
+
+
+<!------------------ boutton fond ---------------------- -->
+<button id="change-color">Changer le fond</button>
+
+
+<script>
+let isBlue = false;
+
+document.getElementById("change-color").addEventListener("click", () => {
+
+    if (!isBlue) {
+        document.body.style.background =
+            "radial-gradient(circle at 20% 30%, #4da3ff 0%, #0056d6 40%, #0a1a33 100%)";
+
+        document.body.style.setProperty("--overlay-grid",
+            "radial-gradient(circle, rgba(255,255,255,0.12) 25%, transparent 26%), radial-gradient(circle, rgba(255,255,255,0.06) 25%, transparent 26%)"
+        );
+
+        isBlue = true;
+
+    } else {
+        document.body.style.background =
+            "radial-gradient(circle at 20% 30%, #ffcf33 0%, #ff4b4b 40%, #1a1a1a 100%)";
+
+        document.body.style.setProperty("--overlay-grid",
+            "radial-gradient(circle, rgba(255,255,255,0.15) 25%, transparent 26%), radial-gradient(circle, rgba(255,255,255,0.08) 25%, transparent 26%)"
+        );
+
+        isBlue = false;
+    }
+});
+</script>
+
+
+
+<!--_____________________________________ fin boutton__________________________ -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
