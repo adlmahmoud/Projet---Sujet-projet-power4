@@ -9,27 +9,22 @@ import (
 	"time"
 )
 
-// ================== STRUCTURES ==================
-
-// Player représente un joueur
 type Player struct {
 	Name  string
 	Color string
 }
 
-// Game représente une partie de Puissance 4
 type Game struct {
-	Board       [7][6]string // 7 colonnes, 6 lignes
+	Board       [7][6]string
 	Player1     Player
 	Player2     Player
-	CurrentTurn int    // 1 ou 2
-	Winner      string // Nom du gagnant
-	Status      string // "en cours", "terminé", "nul"
+	CurrentTurn int
+	Winner      string
+	Status      string
 	MoveCount   int
 	StartTime   time.Time
 }
 
-// HistoryEntry représente une partie dans l'historique
 type HistoryEntry struct {
 	Player1 string
 	Player2 string
@@ -38,7 +33,6 @@ type HistoryEntry struct {
 	Date    string
 }
 
-// GameState contient l'état global
 type GameState struct {
 	Game    *Game
 	History []HistoryEntry
@@ -49,9 +43,6 @@ var state = &GameState{
 	History: []HistoryEntry{},
 }
 
-// ================== MÉTHODES DU JEU ==================
-
-// NewGame crée une nouvelle partie
 func NewGame(p1Name, p1Color, p2Name, p2Color string) *Game {
 	return &Game{
 		Board:       [7][6]string{},
@@ -64,7 +55,6 @@ func NewGame(p1Name, p1Color, p2Name, p2Color string) *Game {
 	}
 }
 
-// ColorOf retourne la couleur du joueur
 func (g *Game) ColorOf(playerName string) string {
 	if playerName == g.Player1.Name {
 		return g.Player1.Color
@@ -72,7 +62,6 @@ func (g *Game) ColorOf(playerName string) string {
 	return g.Player2.Color
 }
 
-// CurrentPlayer retourne le joueur courant
 func (g *Game) CurrentPlayer() Player {
 	if g.CurrentTurn == 1 {
 		return g.Player1
@@ -80,32 +69,27 @@ func (g *Game) CurrentPlayer() Player {
 	return g.Player2
 }
 
-// PlayMove joue un coup dans la colonne donnée
 func (g *Game) PlayMove(col int) bool {
 	if col < 0 || col >= 7 || g.Status != "en cours" {
 		return false
 	}
 
-	// Trouver la première case libre (du bas vers le haut)
 	for row := 5; row >= 0; row-- {
 		if g.Board[col][row] == "" {
 			g.Board[col][row] = g.CurrentPlayer().Name
 			g.MoveCount++
 
-			// Vérifier victoire
 			if g.checkWin(col, row) {
 				g.Winner = g.CurrentPlayer().Name
 				g.Status = "terminé"
 				return true
 			}
 
-			// Vérifier match nul
 			if g.MoveCount >= 42 {
 				g.Status = "nul"
 				return true
 			}
 
-			// Changer de joueur
 			if g.CurrentTurn == 1 {
 				g.CurrentTurn = 2
 			} else {
@@ -114,17 +98,15 @@ func (g *Game) PlayMove(col int) bool {
 			return true
 		}
 	}
-	return false // Colonne pleine
+	return false
 }
 
-// checkWin vérifie si le dernier coup est gagnant
 func (g *Game) checkWin(col, row int) bool {
 	player := g.Board[col][row]
 	directions := [][2]int{{0, 1}, {1, 0}, {1, 1}, {1, -1}}
 
 	for _, dir := range directions {
 		count := 1
-		// Direction positive
 		for i := 1; i < 4; i++ {
 			c, r := col+dir[0]*i, row+dir[1]*i
 			if c >= 0 && c < 7 && r >= 0 && r < 6 && g.Board[c][r] == player {
@@ -133,7 +115,6 @@ func (g *Game) checkWin(col, row int) bool {
 				break
 			}
 		}
-		// Direction négative
 		for i := 1; i < 4; i++ {
 			c, r := col-dir[0]*i, row-dir[1]*i
 			if c >= 0 && c < 7 && r >= 0 && r < 6 && g.Board[c][r] == player {
@@ -149,17 +130,12 @@ func (g *Game) checkWin(col, row int) bool {
 	return false
 }
 
-// ================== TEMPLATES ==================
-
 var templates *template.Template
 
 func loadTemplates() {
 	templates = template.Must(template.ParseGlob("templates/*/*.html"))
 }
 
-// ================== HANDLERS ==================
-
-// Accueil
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
 		http.NotFound(w, r)
@@ -168,12 +144,10 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "templates/accueil/page_d_accueil.html")
 }
 
-// Page d'initialisation
 func initHandler(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "templates/init/init.html")
 }
 
-// Démarrage de la partie
 func startHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Redirect(w, r, "/init", http.StatusSeeOther)
@@ -206,7 +180,6 @@ func startHandler(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/game", http.StatusSeeOther)
 }
 
-// Page du jeu
 func gameHandler(w http.ResponseWriter, r *http.Request) {
 	state.mu.Lock()
 	defer state.mu.Unlock()
@@ -233,7 +206,6 @@ func gameHandler(w http.ResponseWriter, r *http.Request) {
 	templates.ExecuteTemplate(w, "game.html", data)
 }
 
-// Jouer un coup
 func moveHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Redirect(w, r, "/game", http.StatusSeeOther)
@@ -252,7 +224,6 @@ func moveHandler(w http.ResponseWriter, r *http.Request) {
 	if state.Game != nil {
 		state.Game.PlayMove(col)
 
-		// Si la partie est terminée, ajouter à l'historique
 		if state.Game.Status != "en cours" {
 			entry := HistoryEntry{
 				Player1: state.Game.Player1.Name,
@@ -269,7 +240,6 @@ func moveHandler(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/game", http.StatusSeeOther)
 }
 
-// Réinitialiser la partie
 func resetHandler(w http.ResponseWriter, r *http.Request) {
 	state.mu.Lock()
 	if state.Game != nil {
@@ -284,7 +254,6 @@ func resetHandler(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/game", http.StatusSeeOther)
 }
 
-// Historique
 func historyHandler(w http.ResponseWriter, r *http.Request) {
 	state.mu.Lock()
 	defer state.mu.Unlock()
@@ -298,16 +267,12 @@ func historyHandler(w http.ResponseWriter, r *http.Request) {
 	templates.ExecuteTemplate(w, "History", data)
 }
 
-// ================== MAIN ==================
-
 func main() {
 	loadTemplates()
 
-	// Servir les fichiers statiques
 	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("css"))))
 	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("assets"))))
 
-	// Routes
 	http.HandleFunc("/", homeHandler)
 	http.HandleFunc("/init", initHandler)
 	http.HandleFunc("/start", startHandler)
