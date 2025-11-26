@@ -1,36 +1,38 @@
+{{define "end.html"}}
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Résultat - Power 4</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/end.css') }}">
+    <link rel="stylesheet" href="/css/game.css">
 </head>
 <body>
     <div class="container-end">
         <div class="result-card">
-            <h1 class="result-title">{{ result_title }}</h1>
+            <h1 class="result-title">{{.ResultTitle}}</h1>
             
             <div class="result-info">
-                <p class="result-message">{{ result_message }}</p>
-                <p class="winner-name">{{ winner_name }}</p>
+                <p class="result-message">{{.ResultMessage}}</p>
+                <p class="winner-name">{{.WinnerName}}</p>
             </div>
 
             <div class="stats">
                 <div class="stat-item">
                     <span class="stat-label">Coups joués:</span>
-                    <span class="stat-value">{{ total_moves }}</span>
+                    <span class="stat-value">{{.TotalMoves}}</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">Durée:</span>
-                    <span class="stat-value">{{ game_duration }}</span>
+                    <span class="stat-value">{{.GameDuration}}</span>
                 </div>
             </div>
 
             <div class="actions">
-                <a href="../init/init.html" class="btn btn-primary">Nouvelle Partie</a>
+                <a href="/init" class="btn btn-primary">Nouvelle Partie</a>
             </div>
         </div>
     </div>
 </body>
 </html>
+{{end}}

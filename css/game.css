@@ -1,0 +1,333 @@
+/* ===== GAME PAGE CSS ===== */
+
+/* Background */
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: radial-gradient(circle at 20% 30%, #ffcf33 0%, #ff4b4b 40%, #1a1a1a 100%);
+    background-attachment: fixed;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-size: 120px 120px;
+    background-image:
+        radial-gradient(circle, rgba(255,255,255,0.15) 25%, transparent 26%),
+        radial-gradient(circle, rgba(255,255,255,0.08) 25%, transparent 26%);
+    background-position: 0 0, 60px 60px;
+    pointer-events: none;
+    opacity: 0.15;
+}
+
+/* Container */
+.game-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header */
+.game-header {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.game-header h1 {
+    color: white;
+    margin: 0;
+    font-size: 2rem;
+}
+
+.header-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.players-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.player-status {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px 15px;
+    border-radius: 10px;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.player-status.active {
+    background: rgba(255, 215, 0, 0.3);
+    border: 2px solid #ffd700;
+    transform: scale(1.05);
+}
+
+.player-name {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.player-turn {
+    display: block;
+    font-size: 0.8rem;
+    color: #ffd700;
+    margin-top: 5px;
+}
+
+.vs {
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+/* Buttons */
+.btn-quit, .btn-reset, .btn-history {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.btn-quit {
+    background: #ff4444;
+    color: white;
+}
+
+.btn-quit:hover {
+    background: #cc0000;
+    transform: scale(1.05);
+}
+
+.btn-reset {
+    background: #4CAF50;
+    color: white;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.btn-reset:hover {
+    background: #45a049;
+}
+
+.btn-history {
+    background: #2196F3;
+    color: white;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.btn-history:hover {
+    background: #1976D2;
+}
+
+/* Main Game Area */
+.game-main {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.game-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Game Board */
+.game-board {
+    display: flex;
+    gap: 8px;
+    background: linear-gradient(145deg, #1e5799 0%, #2989d8 50%, #1e5799 100%);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.column .btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.column .btn:hover {
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(1.1);
+}
+
+.cell {
+    width: 60px;
+    height: 60px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.token {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    animation: dropIn 0.3s ease-out;
+}
+
+.token.red {
+    background: radial-gradient(circle at 30% 30%, #ff6b6b, #c0392b);
+}
+
+.token.yellow {
+    background: radial-gradient(circle at 30% 30%, #f9e076, #f1c40f);
+}
+
+@keyframes dropIn {
+    from {
+        transform: translateY(-100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Game Message */
+.game-message {
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 15px 30px;
+    border-radius: 10px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Sidebar */
+.game-sidebar {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 20px;
+    min-width: 200px;
+}
+
+.score-board {
+    color: white;
+}
+
+.score-board h3 {
+    margin-top: 0;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    padding-bottom: 10px;
+}
+
+.score-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.6);
+    padding: 20px;
+    margin-top: 30px;
+}
+
+/* History Page */
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.history-item {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 15px;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.history-number {
+    background: #ffd700;
+    color: #333;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.history-details p {
+    margin: 5px 0;
+}
+
+.result {
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+.no-history {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1.2rem;
+    padding: 50px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .game-main {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .cell {
+        width: 45px;
+        height: 45px;
+    }
+
+    .token {
+        width: 38px;
+        height: 38px;
+    }
+
+    .game-header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .players-info {
+        flex-direction: column;
+    }
+}
