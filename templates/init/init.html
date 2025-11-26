@@ -165,8 +165,35 @@ document.getElementById("change-color").addEventListener("click", () => {
 </script>
 
 
-
 <!--_____________________________________ fin boutton__________________________ -->
+<script>
+const p1Radios = document.querySelectorAll("input[name='player1Color']");
+const p2Radios = document.querySelectorAll("input[name='player2Color']");
+
+function updateColors() {
+    let p1 = document.querySelector("input[name='player1Color']:checked").value;
+    let p2 = document.querySelector("input[name='player2Color']:checked").value;
+
+    p2Radios.forEach(r => {
+        r.disabled = (r.value === p1);
+    });
+
+    if (p1 === p2) {
+        document.querySelector(`input[name='player2Color'][value='${p1 === 'red' ? 'yellow' : 'red'}']`).checked = true;
+    }
+
+    p2 = document.querySelector("input[name='player2Color']:checked").value;
+
+    p1Radios.forEach(r => {
+        r.disabled = (r.value === p2);
+    });
+}
+
+p1Radios.forEach(r => r.addEventListener("change", updateColors));
+p2Radios.forEach(r => r.addEventListener("change", updateColors));
+
+updateColors();
+</script>
 
 
 
