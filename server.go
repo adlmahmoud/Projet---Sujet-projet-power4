@@ -156,9 +156,9 @@ func startHandler(w http.ResponseWriter, r *http.Request) {
 
 	r.ParseForm()
 	p1Name := r.FormValue("player1Name")
-	p1Color := r.FormValue("player1Color")
+	p1Color := "red"
 	p2Name := r.FormValue("player2Name")
-	p2Color := r.FormValue("player2Color")
+	p2Color := "yellow"
 
 	if p1Name == "" {
 		p1Name = "Joueur 1"
